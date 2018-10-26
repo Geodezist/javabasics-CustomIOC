@@ -1,0 +1,37 @@
+<beans>
+    <bean id="userBeanDefinition" class="ua.com.bpgdev.customioc.entity.BeanDefinition">
+        <property name="id" value="testBeanDefinitionId"/>
+        <property name="className" value="BeanDefinition"/>
+    </bean>
+
+    <bean id="userBean" class="ua.com.bpgdev.customioc.entity.Bean">
+        <property name="id" value="userBeanId"/>
+        <property name="value" ref="userBeanDefinition"/>
+    </bean>
+
+    <bean id="testMyClass" class="ua.com.bpgdev.customioc.reader.xml.testentity.MyClass">
+        <property name="count" value="10"/>
+        <property name="name" value="testMyClass.nameProperty"/>
+        <property name="myClassDouble" value="10.01"/>
+    </bean>
+
+    <bean id="testMySubClass" class="ua.com.bpgdev.customioc.reader.xml.testentity.MySubClass">
+        <property name="count" value="100"/>
+        <property name="name" value="testMySubClass.nameProperty"/>
+        <property name="myClassDouble" value="100.001"/>
+        <property name="somePrivateMySubClass" ref="testMySubClass"/>
+        <property name="somePrivateDouble" value="200.002"/>
+    </bean>
+
+    <bean id="testMySubSubClass" class="ua.com.bpgdev.customioc.reader.xml.testentity.MySubSubClass">
+        <property name="count" value="1000"/>
+        <property name="name" value="testMySubSubClass.nameProperty"/>
+        <property name="myClassDouble" value="1000.0001"/>
+        <property name="somePrivateMySubClass" ref="testMySubClass"/>
+        <property name="somePrivateDouble" value="2000.0002"/>
+        <property name="somePrivateInt" value="4000"/>
+        <property name="somePrivateString" value="SomeStringValue"/>
+        <property name="somePrivateBoolean" value="false"/>
+    </bean>
+
+</beans>
