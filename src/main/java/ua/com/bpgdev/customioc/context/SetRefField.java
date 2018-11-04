@@ -4,6 +4,8 @@ import ua.com.bpgdev.customioc.entity.Bean;
 import ua.com.bpgdev.customioc.entity.BeanDefinition;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -11,28 +13,18 @@ public class SetRefField extends AbstractSetField implements SetFieldStrategy {
     private List<Bean> beans;
 
     @Override
-    public void doInjection(Class clazz, Object object,
-                            BeanDefinition beanDefinition) throws IllegalAccessException {
-
+    public void doInjection(Object beanObject, BeanDefinition beanDefinition)
+            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Map<String, String> refDependency = beanDefinition.getRefDependency();
-        setAllFields(clazz, object, refDependency);
+        invokeAllSetters(beanObject, refDependency);
     }
 
-    @Override
-    public void setAllFields(Class clazz, Object object, Map<String, String> mapDependency) throws IllegalAccessException {
-        if (clazz.getSuperclass() != null) {
-            Field[] fields = clazz.getDeclaredFields();
-            for (Field field : fields) {
-                String refFromDefinition = mapDependency.get(field.getName());
-                if (refFromDefinition != null) {
-                    Object refObject = getObjectByRefDefinition(refFromDefinition, clazz);
-                    setPrivateAndPublicField(field, object, refObject);
-                }
-            }
-            setAllFields(clazz.getSuperclass(), object, mapDependency);
-        }
+    public void invokeSetter(Object beanObject, Method setterMethod, String propertyValue)
+            throws InvocationTargetException, IllegalAccessException {
+        Class propertyClass = (setterMethod.getParameterTypes())[0];
+        Object propertyObject = getObjectByRefDefinition(propertyValue, propertyClass);
+        setterMethod.invoke(beanObject, propertyObject);
     }
-
 
     private Object getObjectByRefDefinition(String objectId, Class clazz) {
         for (Bean bean : beans) {

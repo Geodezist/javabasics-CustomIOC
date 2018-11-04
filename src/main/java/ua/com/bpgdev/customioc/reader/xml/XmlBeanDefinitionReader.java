@@ -21,18 +21,21 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
     private String path;
     private List<BeanDefinition> beanDefinitions;
 
+    public XmlBeanDefinitionReader() {
+    }
+
     public XmlBeanDefinitionReader(String path) {
         this.path = path;
     }
 
     public List<BeanDefinition> getBeanDefinitions() {
         if (beanDefinitions == null) {
-            beanDefinitions = initBeanDefinitions(loadFile());
+            initBeanDefinitions(loadFile());
         }
         return beanDefinitions;
     }
 
-    List<BeanDefinition> initBeanDefinitions(InputStream inputStream) {
+    void initBeanDefinitions(InputStream inputStream) {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         BeanDefinitionXmlHandler beanDefinitionXmlHandler = new BeanDefinitionXmlHandler();
         try {
@@ -42,10 +45,11 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return beanDefinitionXmlHandler.getBeanDefinitions();
+        beanDefinitions =  beanDefinitionXmlHandler.getBeanDefinitions();
     }
 
-    InputStream loadFile() {
+    private InputStream loadFile() {
+
         Path filePath = Paths.get(".", path);
         String absoluteFileName = filePath.normalize().toAbsolutePath().toString();
         File file = new File(absoluteFileName);
@@ -57,4 +61,12 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
             throw new RuntimeException("Failed to read context file", e);
         }
     }
+        /*
+        try {
+            InputStream inputStrem = this.getClass().getResourceAsStream(path);
+            return inputStrem;
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Failed to read context file", e);
+        }
+    }*/
 }

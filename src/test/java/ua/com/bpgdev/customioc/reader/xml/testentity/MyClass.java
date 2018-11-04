@@ -25,6 +25,18 @@ public class MyClass {
         return 5;
     }
 
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMyClassDouble(double myClassDouble) {
+        this.myClassDouble = myClassDouble;
+    }
+
     private void somePrivateMethod() {
 
     }

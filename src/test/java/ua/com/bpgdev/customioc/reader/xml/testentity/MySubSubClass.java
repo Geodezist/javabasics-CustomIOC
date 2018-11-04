@@ -17,6 +17,18 @@ public class MySubSubClass extends MySubClass {
         return somePrivateInt;
     }
 
+    public void setSomePrivateInt(int somePrivateInt) {
+        this.somePrivateInt = somePrivateInt;
+    }
+
+    public void setSomePrivateString(String somePrivateString) {
+        this.somePrivateString = somePrivateString;
+    }
+
+    public void setSomePrivateBoolean(boolean somePrivateBoolean) {
+        this.somePrivateBoolean = somePrivateBoolean;
+    }
+
     public String getSomePrivateString() {
         return somePrivateString;
     }

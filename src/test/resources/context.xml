@@ -33,5 +33,4 @@
         <property name="somePrivateString" value="SomeStringValue"/>
         <property name="somePrivateBoolean" value="false"/>
     </bean>
-
 </beans>

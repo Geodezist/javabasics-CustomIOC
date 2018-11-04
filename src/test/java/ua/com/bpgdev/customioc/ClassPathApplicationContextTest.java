@@ -10,11 +10,11 @@ import ua.com.bpgdev.customioc.reader.xml.testentity.MySubSubClass;
 import static org.junit.Assert.*;
 
 public class ClassPathApplicationContextTest {
-    ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     @Before
     public void prepare() {
-        applicationContext = new ClassPathApplicationContext("context.xml");
+        applicationContext = new ClassPathApplicationContext("/src/test/resources/context.xml");
     }
 
     @Test
